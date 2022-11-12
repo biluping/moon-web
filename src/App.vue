@@ -2,6 +2,7 @@
 import SidebarInfo from './components/sidebar/SidebarInfo.vue'
 import SidebarEnv from './components/sidebar/SidebarEnv.vue'
 import AppBody from './components/AppBody.vue'
+import SidebarManage from "./components/sidebar/SidebarManage.vue";
 </script>
 
 <template>

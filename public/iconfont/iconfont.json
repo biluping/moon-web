@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1026425",
+      "name": "app",
+      "font_class": "app",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "5875521",
+      "name": "add",
+      "font_class": "add1",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "6151117",
+      "name": "lock-fill",
+      "font_class": "lock-fill",
+      "unicode": "e7b9",
+      "unicode_decimal": 59321
+    },
+    {
       "icon_id": "4766954",
       "name": "star",
       "font_class": "star1",

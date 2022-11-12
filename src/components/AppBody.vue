@@ -3,8 +3,9 @@
     <Header class="moon-header mb20"></Header>
     <div class="body-container">
       <aside>
-        <SidebarEnv class="sidebarEnv mb20"></SidebarEnv>
-        <SidebarInfo></SidebarInfo>
+        <SidebarEnv class="mb20"></SidebarEnv>
+        <SidebarInfo class="mb20"></SidebarInfo>
+        <SidebarManage></SidebarManage>
       </aside>
       <main>
 
@@ -16,6 +17,7 @@
 <script lang="ts" setup>
 import SidebarEnv from './sidebar/SidebarEnv.vue'
 import SidebarInfo from './sidebar/SidebarInfo.vue'
+import SidebarManage from './sidebar/SidebarManage.vue'
 import Header from "./head/Header.vue";
 </script>
 
