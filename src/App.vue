@@ -3,10 +3,13 @@ import SidebarInfo from './components/sidebar/SidebarInfo.vue'
 import SidebarEnv from './components/sidebar/SidebarEnv.vue'
 import AppBody from './components/AppBody.vue'
 import SidebarManage from "./components/sidebar/SidebarManage.vue";
+import ConfigTable from "./components/body/ConfigTable.vue";
+import MoonBtn from "./components/btn/MoonBtn.vue";
 </script>
 
 <template>
-  <AppBody></AppBody>
+  <ConfigTable></ConfigTable>
+<!--  <MoonBtn></MoonBtn>-->
 </template>
 
 <style lang="less">

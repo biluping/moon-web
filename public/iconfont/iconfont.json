@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "444310",
+      "name": "实验，化学",
+      "font_class": "shiyanhuaxue",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "4347518",
+      "name": "icon_发布",
+      "font_class": "icon_fabu",
+      "unicode": "eb88",
+      "unicode_decimal": 60296
+    },
+    {
+      "icon_id": "5387536",
+      "name": "历史记录",
+      "font_class": "lishijilu",
+      "unicode": "eaf7",
+      "unicode_decimal": 60151
+    },
+    {
+      "icon_id": "10139425",
+      "name": "授权",
+      "font_class": "shouquan",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "14313161",
+      "name": "回退",
+      "font_class": "huitui",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
       "icon_id": "1026425",
       "name": "app",
       "font_class": "app",
