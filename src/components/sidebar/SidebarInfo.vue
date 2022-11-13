@@ -69,7 +69,7 @@
   }
 
   .info{
-    padding: 15px 20px;
+    padding: 15px 10px;
   }
 
   .info-name{
@@ -77,6 +77,7 @@
     color: #726f6f;
     font-size: 14px;
     font-weight: bold;
+    white-space: nowrap;
   }
 
   .info-value{
