@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-</template>
+</template>·
 
 <script lang="ts" setup>
 import SidebarEnv from './sidebar/SidebarEnv.vue'
