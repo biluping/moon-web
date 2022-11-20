@@ -7,7 +7,9 @@
         <SidebarInfo class="mb20"></SidebarInfo>
         <SidebarManage></SidebarManage>
       </aside>
-      <ConfigTable class="config-table"></ConfigTable>
+      <div class="config-table-wrapper">
+        <ConfigTable class="mb40" v-for="key in Object.keys(config)" :id="key" :obj="config[key]"></ConfigTable>
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +20,21 @@ import SidebarInfo from './sidebar/SidebarInfo.vue'
 import SidebarManage from './sidebar/SidebarManage.vue'
 import Header from "./head/Header.vue";
 import ConfigTable from "./body/ConfigTable.vue";
+import {onMounted, reactive} from "vue";
+import {getMoonConfig} from "../api/request";
+
+let config = reactive<any>({})
+
+onMounted(()=>{
+  getMoonConfig("example").then(r=>{
+    for(let key in r){
+      config[key] = r[key]
+    }
+  })
+})
+
+
+
 </script>
 
 <style scoped lang="less">
@@ -26,11 +43,7 @@ import ConfigTable from "./body/ConfigTable.vue";
     padding: 0 20px;
   }
 
-  aside{
-    //width: 200px;
-  }
-
-  .config-table{
+  .config-table-wrapper{
     flex-grow: 1;
   }
 </style>

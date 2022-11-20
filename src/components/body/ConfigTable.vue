@@ -2,7 +2,7 @@
   <main>
     <div class="container">
       <div class="config-info-btn h50">
-        <div class="bold">application</div>
+        <div class="bold">{{id}}</div>
         <div>
           <MoonBtn class="mr5" icon="iconfont icon-icon_fabu" type="green">发布</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-huitui">回滚</MoonBtn>
@@ -41,16 +41,16 @@
             <th style="width: 8%">操作</th>
           </tr>
 
-          <tr>
-            <td class="publish-status">
+          <tr v-for="key in Object.keys(props.obj)" id="key">
+            <td style="width: 8%" class="publish-status">
               <MoonTag>已发布</MoonTag>
             </td>
-            <td>list</td>
-            <td>111</td>
-            <td></td>
-            <td>apollo(apollo)</td>
-            <td>2022-09-05 21:04:53</td>
-            <td>
+            <td style="width: 15%">{{key}}</td>
+            <td style="width: 30%" class="config-val">{{obj[key]}}</td>
+            <td style="width: 13%"></td>
+            <td style="width: 10%">apollo(apollo)</td>
+            <td style="width: 16%">2022-09-05 21:04:53</td>
+            <td style="width: 8%">
               <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%"></MoonBtn>
               <MoonBtn type="icon" icon="iconfont icon-cuowu"></MoonBtn>
             </td>
@@ -65,6 +65,19 @@
 <script setup lang="ts">
   import MoonBtn from '../btn/MoonBtn.vue'
   import MoonTag from '../tag/MoonTag.vue'
+  import {onMounted, reactive, ref} from "vue";
+  import {getMoonConfig} from "../../api/request";
+
+  let props = defineProps({
+    id:{
+      type: String,
+      default: 'application'
+    },
+    obj: {
+      type: Object,
+      default: {}
+    }
+  })
 </script>
 
 <style lang="less" scoped>
@@ -89,6 +102,7 @@
   table{
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
   }
 
   td, th {
@@ -111,5 +125,11 @@
 
   .publish-status{
     font-size: 10px;
+  }
+
+  .config-val {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>
