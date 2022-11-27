@@ -19,17 +19,16 @@
             <tbody>
             <tr>
               <th>Appid</th>
-              <th>应用名称</th>
-              <th>部门</th>
-              <th>负责人</th>
-              <th>邮箱</th>
+              <th>应用地址</th>
+              <th>操作</th>
             </tr>
-            <tr @click="$router.push('config')">
-              <td>moon-demo</td>
-              <td>moon-demo</td>
-              <td>demo部门(demo)</td>
-              <td>moon</td>
-              <td>moon@acme.com</td>
+            <tr v-for="(app, index) in appList" :id="index" @click="$router.push({name: 'config', params: {appid: app.appid}})">
+              <td>{{app.appid}}</td>
+              <td>{{app.appUrl}}</td>
+              <td>
+                <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%"></MoonBtn>
+                <MoonBtn type="icon" icon="iconfont icon-cuowu"></MoonBtn>
+              </td>
             </tr>
             </tbody>
           </table>
@@ -41,7 +40,13 @@
 </template>
 
 <script setup lang="ts">
-
+  import MoonBtn from '../btn/MoonBtn.vue'
+  defineProps({
+    appList: {
+      type: Array,
+      default: []
+    }
+  })
 </script>
 
 <style lang="less" scoped>

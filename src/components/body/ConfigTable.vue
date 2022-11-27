@@ -51,7 +51,7 @@
             <td style="width: 10%">apollo(apollo)</td>
             <td style="width: 16%">2022-09-05 21:04:53</td>
             <td style="width: 8%">
-              <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%"></MoonBtn>
+              <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%" @click="edit(key)"></MoonBtn>
               <MoonBtn type="icon" icon="iconfont icon-cuowu"></MoonBtn>
             </td>
           </tr>

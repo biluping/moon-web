@@ -23,15 +23,24 @@ import ConfigTable from "../../components/body/ConfigTable.vue";
 import {onMounted, reactive} from "vue";
 import {getMoonConfig} from "../../api/request";
 
-let config = reactive<any>({})
+  let props = defineProps({
+    appid: {
+      type: String,
+      default: ''
+    },
 
-onMounted(()=>{
-  getMoonConfig("example").then(r=>{
-    for(let key in r){
-      config[key] = r[key]
-    }
+  });
+
+  let config = reactive<any>({})
+
+  onMounted(()=>{
+    console.log(props.appid)
+    getMoonConfig(props.appid).then(r=>{
+      for(let key in r){
+        config[key] = r[key]
+      }
+    })
   })
-})
 
 
 

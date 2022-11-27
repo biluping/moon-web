@@ -13,8 +13,9 @@ const routes:Array<RouteRecordRaw> = [
     },
     {
         name: 'config',
-        path: '/config',
-        component: ()=>import('../views/config/Index.vue')
+        path: '/config/:appid',
+        component: ()=>import('../views/config/Index.vue'),
+        props: true
     }
 ]
 
