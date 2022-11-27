@@ -24,7 +24,7 @@
               <th>负责人</th>
               <th>邮箱</th>
             </tr>
-            <tr>
+            <tr @click="$router.push('config')">
               <td>moon-demo</td>
               <td>moon-demo</td>
               <td>demo部门(demo)</td>
@@ -48,6 +48,7 @@
   main{
     background-color: #fff;
     display: flex;
+    color: #777777;
   }
 
   aside{

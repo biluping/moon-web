@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import AppBody from './components/AppBody.vue'
 </script>
 
 <template>
-  <AppBody></AppBody>
+  <router-view></router-view>
 </template>
 
 <style lang="less">

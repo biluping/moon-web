@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header class="moon-header mb20"></Header>
+    <MoonHeader class="moon-header mb20"></MoonHeader>
     <div class="body-container">
       <aside class="mr20">
         <SidebarEnv class="mb20"></SidebarEnv>
@@ -12,16 +12,16 @@
       </div>
     </div>
   </div>
-</template>·
+</template>
 
 <script lang="ts" setup>
-import SidebarEnv from './sidebar/SidebarEnv.vue'
-import SidebarInfo from './sidebar/SidebarInfo.vue'
-import SidebarManage from './sidebar/SidebarManage.vue'
-import Header from "./head/Header.vue";
-import ConfigTable from "./body/ConfigTable.vue";
+import SidebarEnv from '../../components/sidebar/SidebarEnv.vue'
+import SidebarInfo from '../../components/sidebar/SidebarInfo.vue'
+import SidebarManage from '../../components/sidebar/SidebarManage.vue'
+import MoonHeader from "../../components/head/MoonHeader.vue";
+import ConfigTable from "../../components/body/ConfigTable.vue";
 import {onMounted, reactive} from "vue";
-import {getMoonConfig} from "../api/request";
+import {getMoonConfig} from "../../api/request";
 
 let config = reactive<any>({})
 

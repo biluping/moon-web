@@ -1,16 +1,33 @@
 <template>
   <div class="container">
     <div class="win">
-      <img src="../assets/logo-login.png" alt="logo" class="login-logo" />
-      <input type="text" class="login-input" placeholder="Username"/>
-      <input type="text" class="login-input" placeholder="Password"/>
-      <button class="login-btn">登录</button>
+      <img src="../../assets/logo-login.png" alt="logo" class="login-logo" />
+      <input type="text" class="login-input" placeholder="Username" v-model="username" />
+      <input type="text" class="login-input" placeholder="Password" v-model="password" />
+      <button class="login-btn" @click="login">登录</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  import {ref} from "vue";
+  import {useRouter} from "vue-router";
 
+  const router = useRouter();
+
+  let username = ref<String>()
+  let password = ref<String>()
+
+  // 登陆
+  function login(){
+    if (username.value === 'luping.bi' && password.value === 'rabbit'){
+      router.push({
+        name: 'app'
+      })
+    } else {
+      console.log("用户名密码错误")
+    }
+  }
 </script>
 
 <style scoped>
