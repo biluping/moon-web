@@ -63,8 +63,8 @@
 </template>
 
 <script setup lang="ts">
-  import MoonBtn from '../btn/MoonBtn.vue'
-  import MoonTag from '../tag/MoonTag.vue'
+  import MoonBtn from '../base/MoonBtn.vue'
+  import MoonTag from '../base/MoonTag.vue'
   import {onMounted, reactive, ref} from "vue";
   import {getMoonConfig} from "../../api/request";
 

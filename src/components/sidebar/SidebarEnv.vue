@@ -43,10 +43,6 @@
     height: 50px;
   }
 
-  .mt20{
-    margin-top: 20px;
-  }
-
   .info{
     font-size: 10px;
     line-height: 2;

@@ -12,6 +12,11 @@ const routes:Array<RouteRecordRaw> = [
         component: ()=>import('../views/app/Index.vue')
     },
     {
+        name: 'appCreate',
+        path: '/appCreate',
+        component: ()=>import('../views/app/AppCreate.vue')
+    },
+    {
         name: 'config',
         path: '/config/:appid',
         component: ()=>import('../views/config/Index.vue'),

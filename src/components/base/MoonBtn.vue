@@ -1,6 +1,6 @@
 <template>
   <button v-if="type !== 'icon'" class="btn" :class="[type, {'tab-active': typeActive}]">
-    <i :class="[props.icon]"></i>
+    <i v-if="props.icon !== ''" :class="[props.icon]"></i>
     <slot>按钮</slot>
   </button>
   <i v-else :class="[type, icon]"></i>
@@ -11,7 +11,7 @@
   let props = defineProps({
     icon: {
       type: String,
-      default: 'iconfont icon-lock-fill'
+      default: ''
     },
     type: {
       type: String,
