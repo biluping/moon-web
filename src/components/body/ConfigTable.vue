@@ -25,7 +25,7 @@
           <MoonBtn class="mr5" icon="iconfont icon-sync">同步配置</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-huitui">撤销配置</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-bijiaofenxi">比较配置</MoonBtn>
-          <MoonBtn class="mr5" icon="iconfont icon-add1" type="blue">新增配置</MoonBtn>
+          <MoonBtn class="mr5" icon="iconfont icon-add1" type="blue" @click="openDialog">新增配置</MoonBtn>
         </div>
       </div>
 
@@ -65,8 +65,6 @@
 <script setup lang="ts">
   import MoonBtn from '../base/MoonBtn.vue'
   import MoonTag from '../base/MoonTag.vue'
-  import {onMounted, reactive, ref} from "vue";
-  import {getMoonConfig} from "../../api/request";
 
   let props = defineProps({
     id:{
@@ -78,6 +76,12 @@
       default: {}
     }
   })
+
+  const emit = defineEmits(['openDialog'])
+
+  function openDialog(){
+    emit('openDialog')
+  }
 </script>
 
 <style lang="less" scoped>

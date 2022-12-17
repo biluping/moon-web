@@ -8,9 +8,14 @@
         <SidebarManage></SidebarManage>
       </aside>
       <div class="config-table-wrapper">
-        <ConfigTable class="mb40" v-for="key in Object.keys(config)" :id="key" :obj="config[key]"></ConfigTable>
+        <ConfigTable class="mb40" v-for="key in Object.keys(config)" :id="key" :obj="config[key]" @openDialog="showDialog = true"></ConfigTable>
       </div>
     </div>
+    <MoonDialog title="新增/编辑配置" float @closeDialog="closeDialog" v-if="showDialog">
+      <MoonInput :label-width="200" class="mb20" v-model="addConfigDto.key">key</MoonInput>
+      <MoonInput :label-width="200" class="mb20" v-model="addConfigDto.value">value</MoonInput>
+      <MoonBtn style="margin-left: 220px;" type="blue" @click="addConfig">提交</MoonBtn>
+    </MoonDialog>
   </div>
 </template>
 
@@ -20,39 +25,62 @@ import SidebarInfo from '../../components/sidebar/SidebarInfo.vue'
 import SidebarManage from '../../components/sidebar/SidebarManage.vue'
 import MoonHeader from "../../components/head/MoonHeader.vue";
 import ConfigTable from "../../components/body/ConfigTable.vue";
-import {onMounted, reactive} from "vue";
-import {getMoonConfig} from "../../api/request";
+import MoonDialog from "../../components/base/MoonDialog.vue";
+import MoonInput from "../../components/base/MoonInput.vue"
+import MoonBtn from "../../components/base/MoonBtn.vue"
+import {onMounted, reactive, ref} from "vue";
+import {getMoonConfig, saveConfig} from "../../api/request";
 
-  let props = defineProps({
-    appid: {
-      type: String,
-      default: ''
-    },
+let props = defineProps({
+  appid: {
+    type: String,
+    default: ''
+  },
+});
 
-  });
+let config = reactive<any>({})
+let showDialog = ref(false)
+let addConfigDto = reactive<MoonConfig>({
+  key: "",
+  value: ""
+})
 
-  let config = reactive<any>({})
-
-  onMounted(()=>{
-    console.log(props.appid)
-    getMoonConfig(props.appid).then(r=>{
-      for(let key in r){
-        config[key] = r[key]
-      }
-    })
+function getData(){
+  getMoonConfig(props.appid).then(r => {
+    for (let key in r) {
+      config[key] = r[key]
+    }
   })
+}
 
+// 关闭遮照
+function closeDialog(){
+  showDialog.value = false
+  addConfigDto.key = ''
+  addConfigDto.value = ''
+}
 
+onMounted(() => {
+  console.log(props.appid)
+  getData()
+})
+
+function addConfig(){
+  saveConfig(props.appid, addConfigDto).then(res => {
+    getData()
+    showDialog.value = false
+  })
+}
 
 </script>
 
 <style scoped lang="less">
-  .body-container{
-    display: flex;
-    padding: 0 20px;
-  }
+.body-container {
+  display: flex;
+  padding: 0 20px;
+}
 
-  .config-table-wrapper{
-    flex-grow: 1;
-  }
+.config-table-wrapper {
+  flex-grow: 1;
+}
 </style>
