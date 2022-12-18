@@ -8,11 +8,11 @@
         <SidebarManage></SidebarManage>
       </aside>
       <div class="config-table-wrapper">
-        <ConfigTable class="mb40" v-for="key in Object.keys(config)" :id="key" :obj="config[key]" @openDialog="showDialog = true"></ConfigTable>
+        <ConfigTable class="mb40" v-for="key in Object.keys(config)" :id="key" :obj="config[key]" @openDialog="openDialog"></ConfigTable>
       </div>
     </div>
     <MoonDialog title="新增/编辑配置" float @closeDialog="closeDialog" v-if="showDialog">
-      <MoonInput :label-width="200" class="mb20" v-model="addConfigDto.key">key</MoonInput>
+      <MoonInput :label-width="200" class="mb20" v-model="addConfigDto.key" :disabled="isEdit">key</MoonInput>
       <MoonInput :label-width="200" class="mb20" v-model="addConfigDto.value">value</MoonInput>
       <MoonBtn style="margin-left: 220px;" type="blue" @click="addConfig">提交</MoonBtn>
     </MoonDialog>
@@ -40,6 +40,7 @@ let props = defineProps({
 
 let config = reactive<any>({})
 let showDialog = ref(false)
+let isEdit = ref(false)
 let addConfigDto = reactive<MoonConfig>({
   key: "",
   value: ""
@@ -61,7 +62,6 @@ function closeDialog(){
 }
 
 onMounted(() => {
-  console.log(props.appid)
   getData()
 })
 
@@ -70,6 +70,15 @@ function addConfig(){
     getData()
     showDialog.value = false
   })
+}
+
+function openDialog(event:string, key:string, value:string){
+  showDialog.value = true
+  if (event === "edit"){
+    isEdit.value = true
+    addConfigDto.key = key
+    addConfigDto.value = value
+  }
 }
 
 </script>

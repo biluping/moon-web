@@ -30,4 +30,9 @@
     color: white;
   }
 
+  .orange{
+    background-color: orange;
+    color: white;
+  }
+
 </style>
