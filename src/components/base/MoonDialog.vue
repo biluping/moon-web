@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="{mask: props.float}" @click="closeDialog()">
+    <div :class="{mask: props.float}" @click="closeDialog">
       <div :class="['container', {'dialog-float': props.float}]" @click.stop="1+1">
         <div class="title">{{props.title}}</div>
 
@@ -14,6 +14,9 @@
 </template>
 
 <script setup lang="ts">
+
+import {ref, watchEffect} from "vue";
+
   let props = defineProps({
     title:{
       type: String,

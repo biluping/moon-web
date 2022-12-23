@@ -2,6 +2,10 @@ import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 
 const routes:Array<RouteRecordRaw> = [
     {
+        path: "/",
+        component: ()=>import('../views/TestCss.vue')
+    },
+    {
         name: 'login',
         path: '/login',
         component: ()=>import('../components/login/Login.vue')

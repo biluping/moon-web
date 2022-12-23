@@ -2,9 +2,9 @@
   <main>
     <div class="container">
       <div class="config-info-btn h50">
-        <div class="bold">{{id}}</div>
+        <div class="bold">{{ props.id }}</div>
         <div>
-          <MoonBtn class="mr5" icon="iconfont icon-icon_fabu" type="green" @click="publishConfig">发布</MoonBtn>
+          <MoonBtn class="mr5" icon="iconfont icon-icon_fabu" @click="" type="green">发布</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-huitui">回滚</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-lishijilu">发布历史</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-shouquan">授权</MoonBtn>
@@ -25,7 +25,7 @@
           <MoonBtn class="mr5" icon="iconfont icon-sync">同步配置</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-huitui">撤销配置</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-bijiaofenxi">比较配置</MoonBtn>
-          <MoonBtn class="mr5" icon="iconfont icon-add1" type="blue" @click="openDialog">新增配置</MoonBtn>
+          <MoonBtn class="mr5" icon="iconfont icon-add1" type="blue" @click="showDialog = true">新增配置</MoonBtn>
         </div>
       </div>
 
@@ -41,18 +41,18 @@
             <th style="width: 8%">操作</th>
           </tr>
 
-          <tr v-for="key in Object.keys(props.obj)" id="key">
+          <tr v-for="config in configList">
             <td style="width: 8%" class="publish-status">
-              <MoonTag v-if="obj[key].isPublish">已发布</MoonTag>
+              <MoonTag v-if="config.isPublish">已发布</MoonTag>
               <MoonTag v-else color="orange">未发布</MoonTag>
             </td>
-            <td style="width: 15%">{{key}}</td>
-            <td style="width: 30%" class="config-val">{{obj[key].value}}</td>
+            <td style="width: 15%">{{config.key}}</td>
+            <td style="width: 30%" class="config-val">{{config.value}}</td>
             <td style="width: 13%">待开发</td>
             <td style="width: 10%">待开发</td>
-            <td style="width: 16%">{{obj[key].updateTime}}</td>
+            <td style="width: 16%">{{config.updateTime}}</td>
             <td style="width: 8%">
-              <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%" @click="edit(key, obj[key].value)"></MoonBtn>
+              <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%" @click="openDialogWithEditData(key, obj[key].value)"></MoonBtn>
               <MoonBtn type="icon" icon="iconfont icon-cuowu" @click="delConfig(obj[key].appid, key)"></MoonBtn>
             </td>
           </tr>
@@ -60,60 +60,68 @@
         </table>
       </div>
     </div>
+
+    <MoonDialog float v-if="showDialog" @closeDialog="closeDialog">
+      <MoonInput :label-width="200" class="mb20" :disabled="isEdit" v-model="tmpConfig.key">key</MoonInput>
+      <MoonInput :label-width="200" class="mb20" v-model="tmpConfig.value">value</MoonInput>
+      <MoonBtn style="margin-left: 220px;" type="blue">提交</MoonBtn>
+    </MoonDialog>
   </main>
 </template>
 
 <script setup lang="ts">
   import MoonBtn from '../base/MoonBtn.vue'
+  import MoonDialog from '../base/MoonDialog.vue'
+  import MoonInput from '../base/MoonInput.vue'
   import MoonTag from '../base/MoonTag.vue'
-  import {delConfig as delConfigApi, publishConfig as publishConfigApi} from "../../api/request";
+  import {onMounted, reactive, ref} from "vue";
+  import {useRoute, useRouter} from "vue-router";
+  import {getConfig} from "../../api/request";
 
   let props = defineProps({
     id:{
       type: String,
       default: 'application'
     },
-    obj: {
-      type: Object,
-      default: {}
-    }
   })
 
-  const emit = defineEmits(['openDialog'])
+  let appid = useRoute().params.appid;
+  let showDialog = ref(false)
+  let tmpConfig = reactive<MoonConfig>({key: "", value:""})
+  let isEdit = ref(false)
+  let configList = reactive<Array<MoonConfigVo>>([])
 
-  function openDialog(){
-    emit('openDialog', "create", null)
+  onMounted(()=>{
+    getInitData()
+  })
+
+  // 初始化配置数据
+  function getInitData(){
+    getConfig(appid as string, props.id).then(res => {
+      configList.length = 0
+      configList.push(...res)
+    })
   }
 
-  function edit(key:string, value:string){
-    emit('openDialog', "edit", key, value)
+  // 关闭dialog
+  function closeDialog(){
+    showDialog.value = false
+    tmpConfig.key = ""
+    tmpConfig.value = ""
+  }
+
+  // 打开dialog，并设置属性值
+  function openDialogWithEditData(key:string, value:string){
+    tmpConfig.key = key
+    tmpConfig.value = value
+    showDialog.value = true
   }
 
   // 删除配置
   function delConfig(appid:string, key:string){
-    delConfigApi(appid, key).then(res => {
-      delete props.obj[key]
-    })
+
   }
 
-  // 发布配置
-  function publishConfig(){
-    let list:Array<string> = []
-    let appid = ""
-    for(let key of Object.keys(props.obj)){
-      if (!props.obj[key].isPublish){
-        list.push(key)
-        appid = props.obj[key].appid
-      }
-    }
-    if (list.length > 0){
-      publishConfigApi(appid, list).then(res => {
-        list.forEach(k => {
-          props.obj[k].isPublish = true
-        })
-      })
-    }
-  }
 </script>
 
 <style lang="less" scoped>

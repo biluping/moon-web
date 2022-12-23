@@ -5,6 +5,11 @@ export function getAppList(){
     return request.get<String, Array<MoonApp>>('/app');
 }
 
+// 获取nameSpace列表
+export function getNameSpaceList(appid:string){
+    return request.get<String, Array<string>>('/nameSpace/'+appid)
+}
+
 // 创建 app
 export function createOrUpdateApp(appid: string, appUrl: string){
     return request.post('/app', {appid, appUrl})
@@ -16,8 +21,8 @@ export function delApp(appid: string){
 }
 
 // 获取对应app的配置
-export function getMoonConfig(appId:string){
-    return request.get<any, any>('/config/app/' + appId)
+export function getConfig(appid:string, nameSpace:string){
+    return request.get<string, Array<MoonConfigVo>>(`/config/${appid}/${nameSpace}`)
 }
 
 // 创建配置
