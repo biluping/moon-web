@@ -2,8 +2,8 @@
   <div>
     <MoonHeader></MoonHeader>
     <MoonDialog title="创建应用" class="mt20">
-      <MoonInput :label-width="200" class="mb20" v-model="appid">AppId</MoonInput>
-      <MoonInput :label-width="200" class="mb20" v-model="appUrl">应用地址</MoonInput>
+      <MoonInput :label-width="200" class="mb20" v-model="appid">appId</MoonInput>
+      <MoonInput :label-width="200" class="mb20" v-model="host">host</MoonInput>
       <MoonBtn class="btn" type="blue" @click="submit">提交</MoonBtn>
     </MoonDialog>
   </div>
@@ -19,15 +19,15 @@
   import {useRouter} from "vue-router";
 
   let appid = ref("")
-  let appUrl = ref("")
+  let host = ref("")
 
   const router = useRouter();
 
   function submit(){
-    if (appid.value === '' || appUrl.value === ''){
+    if (appid.value === '' || host.value === ''){
       return
     }
-    createOrUpdateApp(appid.value, appUrl.value).then(res => {
+    createOrUpdateApp(appid.value, host.value).then(res => {
       router.push({name: 'app'})
     })
   }
