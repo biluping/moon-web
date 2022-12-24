@@ -15,8 +15,6 @@
 
 <script setup lang="ts">
 
-import {ref, watchEffect} from "vue";
-
   let props = defineProps({
     title:{
       type: String,

@@ -7,7 +7,7 @@ export function getAppList(){
 
 // 获取nameSpace列表
 export function getNameSpaceList(appid:string){
-    return request.get<String, Array<string>>('/nameSpace/'+appid)
+    return request.get<String, Array<NameSpaceVo>>('/nameSpace/'+appid)
 }
 
 // 创建 app
@@ -21,21 +21,21 @@ export function delApp(appid: string){
 }
 
 // 获取对应app的配置
-export function getConfig(appid:string, nameSpace:string){
-    return request.get<string, Array<MoonConfigVo>>(`/config/${appid}/${nameSpace}`)
+export function getConfig(nameSpaceId:number){
+    return request.get<number, Array<MoonConfigVo>>(`/config/getByNameSpaceId/${nameSpaceId}`)
 }
 
 // 创建配置
-export function saveConfig(appId:string, data: MoonConfig){
-    return request.post('/config/save/'+appId, data)
+export function saveConfig(nameSpaceId:number, data: MoonConfig){
+    return request.post('/config/save/'+nameSpaceId, data)
 }
 
 // 删除配置
-export function delConfig(appId:string, key:string){
-    return request.delete(`/config/${appId}/${key}`)
+export function delConfig(nameSpaceId:number, key:string){
+    return request.delete(`/config/${nameSpaceId}/${key}`)
 }
 
 // 发布配置
-export function publishConfig(appId:string, keyList:Array<String>){
-    return request.put(`/config/publish/${appId}`, keyList)
+export function publishConfig(nameSpaceId:number, keyList:Array<String>){
+    return request.put(`/config/publish/${nameSpaceId}`, keyList)
 }

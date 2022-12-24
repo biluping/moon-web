@@ -8,7 +8,7 @@
         <SidebarManage></SidebarManage>
       </aside>
       <div class="config-table-wrapper">
-        <ConfigTable class="mb40" v-for="nameSpace in nameSpaceList" :id="nameSpace"></ConfigTable>
+        <ConfigTable class="mb40" v-for="nameSpace in nameSpaceList" :id="nameSpace.id">{{nameSpace.name}}</ConfigTable>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
   import {getNameSpaceList} from "../../api/request";
   import {useRoute} from "vue-router";
 
-  let nameSpaceList = reactive<Array<String>>([])
+  let nameSpaceList = reactive<Array<NameSpaceVo>>([])
   let appid = useRoute().params.appid;
 
   onMounted(() => {

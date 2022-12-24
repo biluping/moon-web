@@ -16,3 +16,7 @@ declare type MoonConfigVo = {
     updateTime: string
 }
 
+declare type NameSpaceVo = {
+    name: string,
+    id: number
+}

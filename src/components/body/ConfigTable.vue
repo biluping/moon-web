@@ -2,9 +2,11 @@
   <main>
     <div class="container">
       <div class="config-info-btn h50">
-        <div class="bold">{{ props.id }}</div>
+        <div class="bold">
+          <slot></slot>
+        </div>
         <div>
-          <MoonBtn class="mr5" icon="iconfont icon-icon_fabu" @click="" type="green">发布</MoonBtn>
+          <MoonBtn class="mr5" icon="iconfont icon-icon_fabu" @click="publishConfig" type="green">发布</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-huitui">回滚</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-lishijilu">发布历史</MoonBtn>
           <MoonBtn class="mr5" icon="iconfont icon-shouquan">授权</MoonBtn>
@@ -52,8 +54,8 @@
             <td style="width: 10%">待开发</td>
             <td style="width: 16%">{{config.updateTime}}</td>
             <td style="width: 8%">
-              <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%" @click="openDialogWithEditData(key, obj[key].value)"></MoonBtn>
-              <MoonBtn type="icon" icon="iconfont icon-cuowu" @click="delConfig(obj[key].appid, key)"></MoonBtn>
+              <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%" @click="openDialogWithEditData(config.key, config.value)"></MoonBtn>
+              <MoonBtn type="icon" icon="iconfont icon-cuowu" @click="delConfig(config.key)"></MoonBtn>
             </td>
           </tr>
 
@@ -61,10 +63,10 @@
       </div>
     </div>
 
-    <MoonDialog float v-if="showDialog" @closeDialog="closeDialog">
+    <MoonDialog float v-if="showDialog" :title="isEdit ? '编辑配置' : '新增配置'" @closeDialog="closeDialog">
       <MoonInput :label-width="200" class="mb20" :disabled="isEdit" v-model="tmpConfig.key">key</MoonInput>
       <MoonInput :label-width="200" class="mb20" v-model="tmpConfig.value">value</MoonInput>
-      <MoonBtn style="margin-left: 220px;" type="blue">提交</MoonBtn>
+      <MoonBtn style="margin-left: 220px;" type="blue" @click="submit">提交</MoonBtn>
     </MoonDialog>
   </main>
 </template>
@@ -75,17 +77,15 @@
   import MoonInput from '../base/MoonInput.vue'
   import MoonTag from '../base/MoonTag.vue'
   import {onMounted, reactive, ref} from "vue";
-  import {useRoute, useRouter} from "vue-router";
-  import {getConfig} from "../../api/request";
+  import {getConfig, saveConfig, delConfig as delConfigApi, publishConfig as publishConfigApi} from "../../api/request";
 
   let props = defineProps({
     id:{
-      type: String,
-      default: 'application'
+      type: Number,
+      required: true
     },
   })
 
-  let appid = useRoute().params.appid;
   let showDialog = ref(false)
   let tmpConfig = reactive<MoonConfig>({key: "", value:""})
   let isEdit = ref(false)
@@ -97,7 +97,7 @@
 
   // 初始化配置数据
   function getInitData(){
-    getConfig(appid as string, props.id).then(res => {
+    getConfig(props.id).then(res => {
       configList.length = 0
       configList.push(...res)
     })
@@ -112,14 +112,40 @@
 
   // 打开dialog，并设置属性值
   function openDialogWithEditData(key:string, value:string){
+    isEdit.value = true
     tmpConfig.key = key
     tmpConfig.value = value
     showDialog.value = true
   }
 
-  // 删除配置
-  function delConfig(appid:string, key:string){
+  // 添加配置
+  function submit(){
+    saveConfig(props.id, tmpConfig).then(res => {
+      getInitData()
+      closeDialog()
+    })
+  }
 
+  // 删除配置
+  function delConfig(key:string){
+    delConfigApi(props.id, key).then(res => {
+      getInitData()
+    })
+  }
+
+  // 发布配置
+  function publishConfig(){
+    let waitPublishKey = []
+    for (let config of configList) {
+      if (!config.isPublish){
+        waitPublishKey.push(config.key)
+      }
+    }
+    if (waitPublishKey.length > 0){
+      publishConfigApi(props.id, waitPublishKey).then(res => {
+        getInitData()
+      })
+    }
   }
 
 </script>
