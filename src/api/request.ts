@@ -11,8 +11,8 @@ export function getNameSpaceList(appid:string){
 }
 
 // 创建 app
-export function createOrUpdateApp(appid: string, host: string){
-    return request.post('/app', {appid, host})
+export function createOrUpdateApp(appid: string, describe: string){
+    return request.post('/app', {appid, describe})
 }
 
 // 删除 app

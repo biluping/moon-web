@@ -2,6 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
     baseURL: 'http://www.rabbit-cloud.top:10305',
+    // baseURL: 'http://127.0.0.1:10305',
     timeout: 3000,
 });
 

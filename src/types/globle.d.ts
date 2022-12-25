@@ -1,6 +1,7 @@
 declare type MoonApp = {
     appid: string,
-    host: string
+    describe: string,
+    createTime: string
 }
 
 declare type MoonConfig = {

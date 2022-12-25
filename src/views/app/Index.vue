@@ -21,12 +21,14 @@
               <tbody>
               <tr>
                 <th>appid</th>
-                <th>host</th>
+                <th>描述</th>
+                <th>创建时间</th>
                 <th>操作</th>
               </tr>
               <tr v-for="(app, index) in appList" :id="app.appid" @click="$router.push({name: 'config', params: {appid: app.appid}})">
                 <td>{{app.appid}}</td>
-                <td>{{app.host}}</td>
+                <td>{{ app.describe }}</td>
+                <td>{{app.createTime}}</td>
                 <td>
                   <MoonBtn type="icon" icon="iconfont icon-tianxie" style="margin-right: 20%" @click.stop="editApp(index)"></MoonBtn>
                   <MoonBtn type="icon" icon="iconfont icon-cuowu" @click.stop="delApp(app.appid)"></MoonBtn>
@@ -41,7 +43,7 @@
     </main>
     <MoonDialog title="编辑应用" float @closeDialog="closeDialog" v-if="showDialog">
       <MoonInput :label-width="200" class="mb20" v-model="modifyApp.appid" disabled>AppId</MoonInput>
-      <MoonInput :label-width="200" class="mb20" v-model="modifyApp.host">host</MoonInput>
+      <MoonInput :label-width="200" class="mb20" v-model="modifyApp.describe">描述</MoonInput>
       <MoonBtn style="margin-left: 220px;" type="blue" @click="submit">提交</MoonBtn>
     </MoonDialog>
   </div>
@@ -56,7 +58,7 @@
   import {getAppList as getAppListApi, delApp as delAppApi, createOrUpdateApp} from "../../api/request";
 
   let appList = reactive<Array<MoonApp>>([])
-  let modifyApp = reactive<MoonApp>({appid: '', host: ''})
+  let modifyApp = reactive<MoonApp>({appid: '', describe: '', createTime: ''})
   let showDialog = ref(false)
 
   // 获取app
@@ -78,19 +80,19 @@
   function editApp(index: number){
     showDialog.value = true
     modifyApp.appid = appList[index].appid
-    modifyApp.host = appList[index].host
+    modifyApp.describe = appList[index].describe
   }
 
   // 保存编辑结果
   function submit(){
-    if (modifyApp.appid === '' || modifyApp.host === ''){
+    if (modifyApp.appid === '' || modifyApp.describe === ''){
       return
     }
-    createOrUpdateApp(modifyApp.appid, modifyApp.host).then(res => {
+    createOrUpdateApp(modifyApp.appid, modifyApp.describe).then(res => {
       getAppList()
       closeDialog()
       modifyApp.appid = ''
-      modifyApp.host = ''
+      modifyApp.describe = ''
     })
   }
 
@@ -98,7 +100,7 @@
   function closeDialog(){
     showDialog.value = false
     modifyApp.appid = ''
-    modifyApp.host = ''
+    modifyApp.describe = ''
   }
 
   //  初始化
