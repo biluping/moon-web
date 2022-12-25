@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:10305',
+    baseURL: 'http://www.rabbit-cloud:10305',
     timeout: 3000,
 });
 
@@ -14,6 +14,6 @@ axiosInstance.interceptors.response.use(function (response) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
     return Promise.reject(error);
-});
+})
 
 export default axiosInstance;
