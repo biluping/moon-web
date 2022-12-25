@@ -24,7 +24,7 @@
                 <th>host</th>
                 <th>操作</th>
               </tr>
-              <tr v-for="(app, index) in appList" :id="index" @click="$router.push({name: 'config', params: {appid: app.appid}})">
+              <tr v-for="(app, index) in appList" :id="app.appid" @click="$router.push({name: 'config', params: {appid: app.appid}})">
                 <td>{{app.appid}}</td>
                 <td>{{app.host}}</td>
                 <td>
