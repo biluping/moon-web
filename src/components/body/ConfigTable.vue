@@ -120,10 +120,12 @@
 
   // 添加配置
   function submit(){
-    saveConfig(props.id, tmpConfig).then(res => {
-      getInitData()
-      closeDialog()
-    })
+    if(tmpConfig.key !== '' && tmpConfig.value !== ''){
+      saveConfig(props.id, tmpConfig).then(res => {
+        getInitData()
+        closeDialog()
+      })
+    }
   }
 
   // 删除配置
